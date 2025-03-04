@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurzusok és Diákok Kezelése</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Kurzusok Kezelése</h1>
+<form id="courseForm">
+    <input type="text" id="courseName" placeholder="Kurzus neve" required>
+    <button type="submit">Új kurzus létrehozása</button>
+</form>
+
+<h2>Kurzusok</h2>
+<ul id="courseList"></ul>
+
+<h1>Diákok Kezelése</h1>
+<form id="studentForm">
+    <input type="text" id="studentName" placeholder="Diák neve" required>
+    <input type="number" id="studentCourseId" placeholder="Kurzus ID" required>
+    <button type="submit">Új diák létrehozása</button>
+</form>
+
+
+<h2>Diákok</h2>
+<ul id="studentList"></ul>
+
+<script>
+    const apiUrl = "https://vvri.pythonanywhere.com/api/courses";
+
+    // Kurzus létrehozása
+    document.getElementById('courseForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const courseData = {
+            name: document.getElementById('courseName').value,
+            description: document.getElementById('courseDescription').value,
+            credits: parseInt(document.getElementById('courseCredits').value)
+        };
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(courseData)
+        });
+        const result = await response.json();
+        console.log(result);
+        loadCourses();
+    });
+
+    // Diák létrehozása
+    document.getElementById('studentForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const studentData = {
+            name: document.getElementById('studentName').value,
+            email: document.getElementById('studentEmail').value,
+            course_id: parseInt(document.getElementById('studentCourseId').value)
+        };
+        const response = await fetch("https://vvri.pythonanywhere.com/api/students", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(studentData)
+        });
+        const result = await response.json();
+        console.log(result);
+        loadStudents();
+    });
+
+    // Kurzusok betöltése
+    async function loadCourses() {
+        const response = await fetch(apiUrl);
+        const courses = await response.json();
+        const courseList = document.getElementById('courseList');
+        courseList.innerHTML = '';
+        courses.forEach(course => {
+            const li = document.createElement('li');
+            li.textContent = `${course.name}`;
+            courseList.appendChild(li);
+        });
+    }
+
+    // Diákok betöltése
+    async function loadStudents() {
+        const response = await fetch("https://vvri.pythonanywhere.com/api/students");
+        const students = await response.json();
+        const studentList = document.getElementById('studentList');
+        studentList.innerHTML = '';
+        students.forEach(student => {
+            const li = document.createElement('li');
+            li.textContent = `${student.name}`;
+            studentList.appendChild(li);
+        });
+    }
+
+    window.onload = () => {
+        loadCourses();
+        loadStudents();
+    };
+</script>
+
+</body>
+</html>

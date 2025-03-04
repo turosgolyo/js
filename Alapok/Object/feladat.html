@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>feladat</title>
+</head>
+<body>
+    <script>
+        let count = parseInt(prompt("Hány adatot szeretne bekérni?"));
+        let people = [];
+        
+        class Person {
+            constructor(name, email){
+                this.name = name;
+                this.email = email;
+            }
+            print(){
+                console.log(`Név: ${this.name} - Email: ${this.email}`);
+            }
+        }
+        
+        for(let i = 0; i < count; i++){
+            var name = prompt("adja meg a nevet")
+            var email = prompt("adja meg az emailt");
+            const person = new Person(name, email);
+            person.print();
+            people.push(person);
+        }
+        //2. feladat
+        //Hozd létre az órarend programot, mely a heti órarend adatait tartalmazza.
+        //Az adatokat tömbben és objectben tárold.
+        //Írasd ki a heti órarendet.
+        let schedule = {
+            "Monday": ["Matematika", "Fizika", "Kémia"],
+            "Tuesday": ["Biológia", "Történelem", "Fizika"],
+            "Wednesday": ["Matematika", "Fizika", "Kémia"],
+            "Thursday": ["Biológia", "Történelem", "Földrajz"],
+            "Friday": ["Matematika", "Fizika", "Kémia"],
+        }
+        for(let day in schedule){
+            console.log(`${day}:`);
+            for(let subject of schedule[day]){
+                console.log(`${subject}`);
+            }
+        }
+        </script>
+</body>
+</html>

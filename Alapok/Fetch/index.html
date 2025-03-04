@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Felhasználó Adatok</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .form-container {
+      margin-bottom: 20px;
+    }
+    .error {
+      color: red;
+    }
+    .user-data {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Felhasználó Adatok Lekérése</h1>
+  <div class="form-container">
+    <form id="userForm">
+      <label for="userId">Felhasználó ID (1-30):</label>
+      <input type="number" id="userId" name="userId" min="1" max="30" required>
+      <button type="submit">Lekérés</button>
+    </form>
+  </div>
+  <div id="output"></div>
+
+  <script>
+    document.getElementById('userForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const userId = document.getElementById('userId').value;
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = '';
+
+      fetch(`https://jsonplaceholder.org/users/?id=${userId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Hálózati hiba történt: ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(user => {
+          const userHtml = `
+            <div class="user-data">
+              <h2>${user.firstname} ${user.lastname}</h2>
+              <p><strong>ID:</strong> ${user.id}</p>
+              <p><strong>Keresztnév:</strong> ${user.firstname}</p>
+              <p><strong>Utónév:</strong> ${user.lastname}</p>
+              <p><strong>Email:</strong> ${user.email}</p>
+              <p><strong>Telefon:</strong> ${user.phone}</p>
+              <p><strong>Weboldal:</strong>${user.website}</p>
+              <h3>Cím:</h3>
+              <p>${user.address.street}, ${user.address.suite}</p>
+              <p>${user.address.city}, ${user.address.zipcode}</p>
+              <h4>Geo:</h4>
+              <p>Lat: ${user.address.geo.lat}, Lng: ${user.address.geo.lng}</p>
+              <h3>Cég:</h3>
+              <p><strong>Név:</strong> ${user.company.name}</p>
+              <p><strong>Szlogen:</strong> "${user.company.catchPhrase}"</p>
+              <p><strong>BS:</strong> ${user.company.bs}</p>
+            </div>`;
+          outputDiv.innerHTML = userHtml;
+        })
+        .catch(error => {
+          outputDiv.innerHTML = `<p class="error">Hiba történt: ${error.message}</p>`;
+        });
+    });
+  </script>
+</body>
+</html>
