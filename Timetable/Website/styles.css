@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Segoe UI';
+}
+
+table {
+    margin: 1%;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+td, th {
+    text-align: center;
+    padding: 15px;
+    border: 2px, black, solid;
+}

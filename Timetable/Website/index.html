@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órarend</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Órarend</h1>
+        <table id="timetable-table">
+            <thead>
+                <tr>
+                    <th>Nap</th>
+                    <th>Óra</th>
+                    <th>Tantárgy</th>
+                    <th>Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Itt jelennek meg az órák -->
+            </tbody>
+        </table>
+
+        <button id="addClassButton">Óra hozzáadása</button>
+        <button id="refresh">Frissítés</button>
+    </div>
+
+    <!--
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Szerkesztés</h2>
+            <form id="editForm">
+                <label for="day">Nap:</label>
+                <input type="text" id="day" required>
+                <label for="time">Időpont:</label>
+                <input type="text" id="time" required>
+                <label for="subject">Tantárgy:</label>
+                <input type="text" id="subject" required>
+                <button type="submit">Mentés</button>
+            </form>
+        </div>
+    </div>
+    -->
+
+    <script src="script.js"></script>
+</body>
+</html>
