@@ -13,37 +13,48 @@
             <thead>
                 <tr>
                     <th>Nap</th>
-                    <th>Óra</th>
-                    <th>Tantárgy</th>
-                    <th>Műveletek</th>
+                    <th>1. óra</th>
+                    <th>2. óra</th>
+                    <th>3. óra</th>
+                    <th>4. óra</th>
+                    <th>5. óra</th>
+                    <th>6. óra</th>
+                    <th>7. óra</th>
+                    <th>8. óra</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Itt jelennek meg az órák -->
+                <!-- órák -->
             </tbody>
         </table>
 
         <button id="addClassButton">Óra hozzáadása</button>
         <button id="refresh">Frissítés</button>
-    </div>
 
-    <!--
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Szerkesztés</h2>
-            <form id="editForm">
+        <div id="addClassForm" style="display:none; margin-top: 20px;">
+            <h2>Óra hozzáadása</h2>
+            <form id="classForm">
                 <label for="day">Nap:</label>
-                <input type="text" id="day" required>
-                <label for="time">Időpont:</label>
-                <input type="text" id="time" required>
+                <select id="day" name="day" required>
+                    <option value="">Válassz napot</option>
+                    <option value="hétfő">Hétfő</option>
+                    <option value="kedd">Kedd</option>
+                    <option value="szerda">Szerda</option>
+                    <option value="csütörtök">Csütörtök</option>
+                    <option value="péntek">Péntek</option>
+                </select>
+                <br>
+                <label for="period">Óra:</label>
+                <input type="number" id="period" name="period" min="1" max="8" required>
+                <br>
                 <label for="subject">Tantárgy:</label>
-                <input type="text" id="subject" required>
-                <button type="submit">Mentés</button>
+                <input type="text" id="subject" name="subject" required>
+                <br>
+                <button type="submit">Hozzáadás</button>
+                <button type="button" id="cancelAddClass">Mégse</button>
             </form>
         </div>
     </div>
-    -->
 
     <script src="script.js"></script>
 </body>

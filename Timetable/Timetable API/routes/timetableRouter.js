@@ -9,4 +9,6 @@ router.get('/:id', controllers.getClassesById);
 
 router.delete('/:id', controllers.deleteClasses);
 
+router.post('/', controllers.addClass);
+
 export default router;
