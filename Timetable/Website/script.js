@@ -8,7 +8,11 @@ async function loadTimetable() {
     timetableTable.innerHTML = '';
 
     const days = [...new Set(timetable.map(item => item.day))];
-    const times = [...new Set(timetable.map(item => Number(item.period)))].sort((a, b) => a - b);
+    const maxPeriod = 8;
+    const times = [];
+    for (let i = 1; i <= maxPeriod; i++) {
+        times.push(i);
+    }
 
     const timetableMap = {};
     timetable.forEach(item => {
@@ -25,77 +29,103 @@ async function loadTimetable() {
 
         times.forEach(period => {
             const cell = row.insertCell();
-            cell.textContent = timetableMap[day][period] || '';
+            const subject = timetableMap[day][period] || '';
+                cell.textContent = subject;
+
+                if (subject) {
+                    const buttonGroup = document.createElement('div');
+                    buttonGroup.className = 'button-group';
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.dataset.day = day;
+                    editButton.dataset.period = period;
+                    editButton.addEventListener('click', async (event) => {
+                        event.stopPropagation();
+                        const newSubject = prompt(`Edit class subject for ${day} period ${period}:`, subject);
+                        if (newSubject !== null && newSubject.trim() !== '') {
+                            try {
+                                const response = await fetch(apiUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ day: day, period: period, subject: newSubject.trim() })
+                                });
+                                if (response.ok) {
+                                    loadTimetable();
+                                } else {
+                                    alert('Failed to update class.');
+                                }
+                            } catch (error) {
+                                alert('Error updating class.');
+                                console.error(error);
+                            }
+                        }
+                    });
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.dataset.day = day;
+                    deleteButton.dataset.period = period;
+                    deleteButton.addEventListener('click', async (event) => {
+                        event.stopPropagation();
+                        if (confirm(`Delete class ${subject} on ${day} period ${period}?`)) {
+                            try {
+                                const deleteResponse = await fetch(apiUrl, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ day: day, period: period })
+                                });
+                                if (deleteResponse.ok) {
+                                    loadTimetable();
+                                } else {
+                                    alert('Failed to delete class.');
+                                }
+                            } catch (error) {
+                                alert('Error deleting class.');
+                                console.error(error);
+                            }
+                        }
+                    });
+
+                    buttonGroup.appendChild(editButton);
+                    buttonGroup.appendChild(deleteButton);
+                    cell.appendChild(buttonGroup);
+                } else {
+                    const createButton = document.createElement('button');
+                    createButton.textContent = 'Create';
+                    createButton.dataset.day = day;
+                    createButton.dataset.period = period;
+                    createButton.addEventListener('click', async (event) => {
+                        event.stopPropagation();
+                        const newSubject = prompt(`Enter class subject for ${day} period ${period}:`);
+                        if (newSubject !== null && newSubject.trim() !== '') {
+                            try {
+                                const response = await fetch(apiUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ day: day, period: period, subject: newSubject.trim() })
+                                });
+                                if (response.ok) {
+                                    loadTimetable();
+                                } else {
+                                    alert('Failed to add class.');
+                                }
+                            } catch (error) {
+                                alert('Error adding class.');
+                                console.error(error);
+                            }
+                        }
+                    });
+                    cell.appendChild(createButton);
+                }
         });
     });
 }
 
 loadTimetable();
-
-const addClassButton = document.getElementById('addClassButton');
-const addClassFormDiv = document.getElementById('addClassForm');
-const cancelAddClassButton = document.getElementById('cancelAddClass');
-const classForm = document.getElementById('classForm');
-const refreshButton = document.getElementById('refresh');
-
-addClassButton.addEventListener('click', () => {
-    addClassFormDiv.style.display = 'block';
-});
-
-cancelAddClassButton.addEventListener('click', () => {
-    addClassFormDiv.style.display = 'none';
-});
-
-classForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const day = classForm.day.value;
-    const period = parseInt(classForm.period.value);
-    const subject = classForm.subject.value;
-
-    // Check if the cell is already filled
-    const timetableRows = timetableTable.rows;
-    for (let i = 0; i < timetableRows.length; i++) {
-        const row = timetableRows[i];
-        const dayCell = row.cells[0].textContent;
-        if (dayCell === day) {
-            const cell = row.cells[period]; // period corresponds to the cell index for the period
-            if (cell && cell.textContent.trim() !== '') {
-                alert('Ez az időpont már foglalt. Kérjük, válassz másik időpontot.');
-                return; // Cancel upload
-            }
-            break;
-        }
-    }
-
-    const formData = {
-        day: day,
-        period: period,
-        subject: subject
-    };
-
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        if (response.ok) {
-            addClassFormDiv.style.display = 'none';
-            classForm.reset();
-            loadTimetable();
-        } else {
-            alert('Hiba történt az óra hozzáadása során.');
-        }
-    } catch (error) {
-        alert('Hiba történt az óra hozzáadása során.');
-        console.error(error);
-    }
-});
-
-refreshButton.addEventListener('click', () => {
-    loadTimetable();
-});

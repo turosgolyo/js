@@ -8,7 +8,7 @@ export const getClasses = (req, res) => {
             result.push({
                 id: id++,
                 day: day,
-                time: time,
+                period: time,
                 subject: timetable[day][time]
             });
         }
@@ -51,4 +51,29 @@ export const addClass = (req, res) => {
     timetable[day][periodNum] = subject;
 
     res.status(201).json({ message: "Class added successfully", class: { day, period: periodNum, subject } });
+};
+
+export const deleteClassByDayPeriod = (req, res) => {
+    const { day, period } = req.body;
+
+    if (!day || !period) {
+        return res.status(400).json({ message: "Missing day or period in request body" });
+    }
+
+    if (!timetable.hasOwnProperty(day)) {
+        return res.status(400).json({ message: "Invalid day provided" });
+    }
+
+    const periodNum = Number(period);
+    if (isNaN(periodNum) || periodNum <= 0) {
+        return res.status(400).json({ message: "Invalid period provided" });
+    }
+
+    if (!timetable[day][periodNum]) {
+        return res.status(404).json({ message: "Class not found for the given day and period" });
+    }
+
+    delete timetable[day][periodNum];
+
+    res.status(200).json({ message: "Class deleted successfully" });
 };

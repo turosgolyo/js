@@ -9,6 +9,9 @@ router.get('/:id', controllers.getClassesById);
 
 router.delete('/:id', controllers.deleteClasses);
 
+// New delete route to delete class by day and period
+router.delete('/', controllers.deleteClassByDayPeriod);
+
 router.post('/', controllers.addClass);
 
 export default router;
