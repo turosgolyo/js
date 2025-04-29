@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Album Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Album Management</h1>
+
+  <section id="form-section">
+    <h2 id="form-title">Add New Album</h2>
+    <form id="album-form">
+      <input type="hidden" id="album-id" />
+      <div>
+        <label for="band">Band:</label>
+        <input type="text" id="band" name="band" required />
+      </div>
+      <div>
+        <label for="albumTitle">Album Title:</label>
+        <input type="text" id="albumTitle" name="albumTitle" required />
+      </div>
+      <div>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" min="1900" max="2100" />
+      </div>
+      <div>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" />
+      </div>
+      <button type="submit" id="submit-btn">Add Album</button>
+      <button type="button" id="cancel-btn" style="display:none;">Cancel</button>
+    </form>
+  </section>
+
+  <section id="albums-section">
+    <h2>Albums List</h2>
+    <table id="albums-table">
+      <thead>
+        <tr>
+          <th>Band</th>
+          <th>Album Title</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
