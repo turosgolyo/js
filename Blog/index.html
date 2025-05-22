@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog Posts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      max-width: 800px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      margin-bottom: 2rem;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+    form > div {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 0.5rem;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+    }
+    .post {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      position: relative;
+    }
+    .post h2 {
+      margin-top: 0;
+    }
+    .post .actions {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+    .post .actions button {
+      background: none;
+      border: none;
+      color: #007bff;
+      text-decoration: underline;
+      padding: 0;
+      font-size: 0.9rem;
+    }
+    .post .actions button:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Blog Posts</h1>
+
+  <form id="post-form">
+    <h2 id="form-title">Create New Post</h2>
+    <input type="hidden" id="post-id" />
+    <div>
+      <label for="author">Author</label>
+      <input type="text" id="author" required />
+    </div>
+    <div>
+      <label for="title">Title</label>
+      <input type="text" id="title" required />
+    </div>
+    <div>
+      <label for="category">Category</label>
+      <input type="text" id="category" required />
+    </div>
+    <div>
+      <label for="content">Content</label>
+      <textarea id="content" rows="5" required></textarea>
+    </div>
+    <button type="submit">Save</button>
+    <button type="button" id="cancel-edit" style="display:none;">Cancel</button>
+  </form>
+
+  <div id="posts-container"></div>
+
+  <script>
+    const apiBase = 'http://localhost:3000/posts';
+
+    const postForm = document.getElementById('post-form');
+    const postsContainer = document.getElementById('posts-container');
+    const formTitle = document.getElementById('form-title');
+    const postIdInput = document.getElementById('post-id');
+    const authorInput = document.getElementById('author');
+    const titleInput = document.getElementById('title');
+    const categoryInput = document.getElementById('category');
+    const contentInput = document.getElementById('content');
+    const cancelEditBtn = document.getElementById('cancel-edit');
+
+    async function fetchPosts() {
+      const res = await fetch(apiBase);
+      const posts = await res.json();
+      renderPosts(posts);
+    }
+
+    function renderPosts(posts) {
+      postsContainer.innerHTML = '';
+      if (posts.length === 0) {
+        postsContainer.innerHTML = '<p>No blog posts found.</p>';
+        return;
+      }
+      posts.forEach(post => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post';
+
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'actions';
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.onclick = () => startEditPost(post);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.onclick = () => deletePost(post.id);
+
+        actionsDiv.appendChild(editBtn);
+        actionsDiv.appendChild(deleteBtn);
+
+        postDiv.appendChild(actionsDiv);
+
+        const titleEl = document.createElement('h2');
+        titleEl.textContent = post.title;
+        postDiv.appendChild(titleEl);
+
+        const authorEl = document.createElement('p');
+        authorEl.innerHTML = '<strong>Author:</strong> ' + post.author;
+        postDiv.appendChild(authorEl);
+
+        const categoryEl = document.createElement('p');
+        categoryEl.innerHTML = '<strong>Category:</strong> ' + post.category;
+        postDiv.appendChild(categoryEl);
+
+        const contentEl = document.createElement('p');
+        contentEl.textContent = post.content;
+        postDiv.appendChild(contentEl);
+
+        const createdAtEl = document.createElement('p');
+        createdAtEl.innerHTML = '<em>Created: ' + new Date(post.created_at).toLocaleString() + '</em>';
+        postDiv.appendChild(createdAtEl);
+
+        const updatedAtEl = document.createElement('p');
+        updatedAtEl.innerHTML = '<em>Last Modified: ' + new Date(post.updated_at).toLocaleString() + '</em>';
+        postDiv.appendChild(updatedAtEl);
+
+        postsContainer.appendChild(postDiv);
+      });
+    }
+
+    function startEditPost(post) {
+      formTitle.textContent = 'Edit Post';
+      postIdInput.value = post.id;
+      authorInput.value = post.author;
+      titleInput.value = post.title;
+      categoryInput.value = post.category;
+      contentInput.value = post.content;
+      cancelEditBtn.style.display = 'inline';
+    }
+
+    function resetForm() {
+      formTitle.textContent = 'Create New Post';
+      postIdInput.value = '';
+      authorInput.value = '';
+      titleInput.value = '';
+      categoryInput.value = '';
+      contentInput.value = '';
+      cancelEditBtn.style.display = 'none';
+    }
+
+    postForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = postIdInput.value;
+      const postData = {
+        author: authorInput.value.trim(),
+        title: titleInput.value.trim(),
+        category: categoryInput.value.trim(),
+        content: contentInput.value.trim()
+      };
+      if (!postData.author || !postData.title || !postData.category || !postData.content) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      try {
+        if (id) {
+          const res = await fetch(`${apiBase}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+          });
+          if (!res.ok) throw new Error('Failed to update post');
+        } else {
+          const res = await fetch(apiBase, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+          });
+          if (!res.ok) throw new Error('Failed to create post');
+        }
+        resetForm();
+        fetchPosts();
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    cancelEditBtn.addEventListener('click', () => {
+      resetForm();
+    });
+
+    async function deletePost(id) {
+      if (!confirm('Are you sure you want to delete this post?')) return;
+      try {
+        const res = await fetch(`${apiBase}/${id}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Failed to delete post');
+        fetchPosts();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    fetchPosts();
+  </script>
+</body>
+</html>
