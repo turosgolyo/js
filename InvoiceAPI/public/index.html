@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoice Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Invoice Management</h1>
+  <section id="invoice-list-section">
+    <h2>Invoices</h2>
+    <table id="invoice-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Invoice Number</th>
+          <th>Issuer</th>
+          <th>Buyer</th>
+          <th>Invoice Date</th>
+          <th>Completion Date</th>
+          <th>Payment Deadline</th>
+          <th>Total Amount</th>
+          <th>VAT Amount</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="invoice-table-body"></tbody>
+    </table>
+    <button id="add-invoice-btn">Add Invoice</button>
+  </section>
+
+  <section id="invoice-form-section" class="hidden">
+    <h2 id="form-title">Add Invoice</h2>
+    <form id="invoice-form">
+      <input type="hidden" id="invoice-id" />
+      <label for="invoice-number">Invoice Number:</label>
+      <input type="text" id="invoice-number" required />
+
+      <label for="issuer-id">Issuer:</label>
+      <select id="issuer-id" disabled>
+        <option value="1">Default Issuer Ltd.</option>
+      </select>
+
+      <label for="buyer-id">Buyer:</label>
+      <select id="buyer-id" required></select>
+
+      <label for="invoice-date">Invoice Date:</label>
+      <input type="date" id="invoice-date" required />
+
+      <label for="completion-date">Completion Date:</label>
+      <input type="date" id="completion-date" required />
+
+      <label for="payment-deadline">Payment Deadline:</label>
+      <input type="date" id="payment-deadline" required />
+
+      <label for="total-amount">Total Amount:</label>
+      <input type="number" id="total-amount" step="0.01" required />
+
+      <label for="vat-amount">VAT Amount:</label>
+      <input type="number" id="vat-amount" step="0.01" required />
+
+      <div class="form-buttons">
+        <button type="submit" id="save-invoice-btn">Save</button>
+        <button type="button" id="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
