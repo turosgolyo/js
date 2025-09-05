@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lakcím</title>
+    </head>
+    <body>
+        <form id="form_id">
+            <fieldset>
+                <legend>Lakcím</legend>
+
+                <label for="nev">Név:</label>
+                <input type="text" id="nev" name="nev" /><br />
+
+                <label for="isz">Irányító szám:</label>
+                <input type="text" id="isz" name="isz" /><br />
+
+                <label for="t">Település:</label>
+                <input type="text" id="t" name="t" /><br />
+
+                <label for="u">Utca:</label>
+                <input type="text" id="u" name="u" /><br />
+
+                <label for="hsz">Házszám:</label>
+                <input type="text" id="hsz" name="hsz" /><br />
+
+                <button type="button" onclick="saveForm()">Küldés</button>
+            </fieldset>
+        </form>
+
+        <div id="adatok">
+            <h2>Mentett adatok:</h2>
+            <div id="knev"></div>
+            <div id="kisz"></div>
+            <div id="kt"></div>
+            <div id="ku"></div>
+            <div id="khsz"></div>
+        </div>
+
+        <script>
+            function saveForm() {
+                let form = document.getElementById('form_id');
+
+                let nev = document.getElementById('nev').value.trim();
+                let isz = document.getElementById('isz').value.trim();
+                let t = document.getElementById('t').value.trim();
+                let u = document.getElementById('u').value.trim();
+                let hsz = document.getElementById('hsz').value.trim();
+
+                if (nev == '' || isz == '' || t == '' || u == '' || hsz == '') {
+                    alert('Minden mezőt ki kell tölteni!');
+                    return;
+                } else {
+                    localStorage.setItem('nev', nev);
+                    localStorage.setItem('isz', isz);
+                    localStorage.setItem('t', t);
+                    localStorage.setItem('u', u);
+                    localStorage.setItem('hsz', hsz);
+
+                    document.getElementById('knev').innerHTML =
+                        'Nev: ' + localStorage.getItem('nev');
+                    document.getElementById('kisz').innerHTML =
+                        'Iranyitoszam: ' + localStorage.getItem('isz');
+                    document.getElementById('kt').innerHTML =
+                        'Telepules: ' + localStorage.getItem('t');
+                    document.getElementById('ku').innerHTML = 'Utca: ' + localStorage.getItem('u');
+                    document.getElementById('khsz').innerHTML =
+                        'Hazszam: ' + localStorage.getItem('hsz');
+
+                    form.reset();
+                }
+            }
+        </script>
+    </body>
+</html>
