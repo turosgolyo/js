@@ -6,9 +6,30 @@
     <title>Jokes</title>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"></nav>
+
     <div id="main">
       <h1>Jokes</h1>
-      <div id="menu"></div>
+      <div id="menu">
+        <div>
+          <button id="random" onclick="getRandom()">Random</button>
+        </div>
+        <div>
+          <input type="text" id="id" placeholder="Enter an ID" />
+          <button id="byId" onclick="getById()">Search by ID</button>
+        </div>
+        <div>
+          <select name="types" id="type">
+            <option value="programming">Programming</option>
+            <option value="general">General</option>
+            <option value="knock-knock">Knock-Knock</option>
+          </select>
+          <button id="byType" onclick="getByType()">Search by type</button>
+        </div>
+      </div>
+      <div id="jokes"></div>
     </div>
+
+    <script src="jokes.js"></script>
   </body>
 </html>
