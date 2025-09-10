@@ -10,21 +10,28 @@
     <body>
         <ul class="nav justify-content-center">
           <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Main Page</a>
+                <a class="nav-link"  href="index.html">Main Page</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="random.html">Random Joke</a>
+                <a class="nav-link"  href="random.html">Random Joke</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="byId.html">Search Joke By ID</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="byType.html">Search Joke By Type</a>
             </li>
         </ul>
-    <div id="main">
-    <h1>Jokes API</h1>
-    </div>
-            
+
+        <div id="main">
+            <h1>Joke by ID</h1>
+                <div>
+                    <input type="text" id="id" placeholder="Enter an ID" />
+                    <button id="byId" onclick="getById()">Search by ID</button>
+                </div>
+            <div id="jokes"></div>
+        </div>
+
+        <script src="jokes.js"></script>
     </body>
 </html>
