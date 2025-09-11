@@ -4,6 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Lakcím</title>
+        <style>
+            body {
+                text-align: center;
+            }
+            input {
+                margin-bottom: 10px;
+            }
+        </style>
     </head>
     <body>
         <form id="form_id">
@@ -29,8 +37,8 @@
             </fieldset>
         </form>
 
+        <h2>Adatok:</h2>
         <div id="adatok">
-            <h2>Mentett adatok:</h2>
             <div id="knev"></div>
             <div id="kisz"></div>
             <div id="kt"></div>
@@ -39,6 +47,24 @@
         </div>
 
         <script>
+            if (
+                !(localStorage.getItem('nev') === null) &&
+                !(localStorage.getItem('isz') === null) &&
+                !(localStorage.getItem('t') === null) &&
+                !(localStorage.getItem('u') === null) &&
+                !(localStorage.getItem('hsz') === null)
+            ) {
+                document.getElementById('knev').innerHTML = 'Nev: ' + localStorage.getItem('nev');
+                document.getElementById('kisz').innerHTML =
+                    'Iranyitoszam: ' + localStorage.getItem('isz');
+                document.getElementById('kt').innerHTML = 'Telepules: ' + localStorage.getItem('t');
+                document.getElementById('ku').innerHTML = 'Utca: ' + localStorage.getItem('u');
+                document.getElementById('khsz').innerHTML =
+                    'Hazszam: ' + localStorage.getItem('hsz');
+            } else {
+                document.getElementById('adatok').innerHTML = 'Nincs adat mentve.';
+            }
+
             function saveForm() {
                 let form = document.getElementById('form_id');
 

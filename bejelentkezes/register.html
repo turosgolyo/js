@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Main page</title>
+        <link rel="stylesheet" href="bootstrap.css" />
+        <style>
+            body {
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="main.html">Main Page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="register.html">Register</a>
+            </li>
+        </ul>
+
+        <div class="container">
+            <h1>Register</h1>
+            <form onsubmit="return validateForm()">
+                E-mail: <input type="email" id="email" /><br />
+                Password: <input type="password" id="password" /><br />
+                Password again: <input type="password" id="password2" /><br />
+                <input id="submitButton" type="submit" value="Register" />
+            </form>
+        </div>
+
+        <script>
+            function validateForm() {
+                let email = document.getElementById('email').value;
+                let password = document.getElementById('password').value;
+                let password2 = document.getElementById('password2').value;
+
+                if (email === '' || password === '' || password2 === '') {
+                    alert('All fields are required!');
+                    return false;
+                } else if (password !== password2) {
+                    alert('Passwords do not match!');
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            document.getElementById('submitButton').addEventListener('click', () => {
+                if (validateForm()) {
+                    localStorage.setItem('email', document.getElementById('email').value);
+                    localStorage.setItem('password', document.getElementById('password').value);
+                    alert('Registration successful!');
+                }
+            });
+        </script>
+    </body>
+</html>
