@@ -23,5 +23,27 @@
                 <a class="nav-link" href="register.html">Register</a>
             </li>
         </ul>
+
+        <div class="container">
+            <h1>Login</h1>
+            Email: <input type="email" id="email"><br>
+            Password: <input type="password" id="password"><br>
+
+            <button id="submitButton">Login</button>
+        </div>
     </body>
+
+    <script>
+        function validateForm() {
+                let email = document.getElementById('email').value;
+                let password = document.getElementById('password').value;
+
+                if (email === '' || password === '' || password2 === '') {
+                    alert('All fields are required!');
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+    </script>
 </html>

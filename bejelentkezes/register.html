@@ -26,15 +26,24 @@
 
         <div class="container">
             <h1>Register</h1>
-            <form onsubmit="return validateForm()">
                 E-mail: <input type="email" id="email" /><br />
                 Password: <input type="password" id="password" /><br />
                 Password again: <input type="password" id="password2" /><br />
                 <input id="submitButton" type="submit" value="Register" />
-            </form>
         </div>
 
         <script>
+            const emails = [];
+            const passwords = [];
+            console.log(!(localStorage.getItem("emails") === null) && !(localStorage.getItem("passwords") === null))
+            if(!(localStorage.getItem("emails") === null) && !(localStorage.getItem("passwords") === null)){
+                const emails = JSON.parse(localStorage.getItem("emails"));
+                const passwords = JSON.parse(localStorage.getItem("passwords"));
+                console.log(passwords);
+                console.log(emails);
+            }
+                
+
             function validateForm() {
                 let email = document.getElementById('email').value;
                 let password = document.getElementById('password').value;
@@ -53,8 +62,12 @@
 
             document.getElementById('submitButton').addEventListener('click', () => {
                 if (validateForm()) {
-                    localStorage.setItem('email', document.getElementById('email').value);
-                    localStorage.setItem('password', document.getElementById('password').value);
+                    emails.push(document.getElementById("email").value)
+                    passwords.push(document.getElementById("password").value)
+                    
+                    localStorage.setItem('emails', JSON.stringify(emails));
+                    localStorage.setItem('passwords', JSON.stringify(passwords));
+                    
                     alert('Registration successful!');
                 }
             });
