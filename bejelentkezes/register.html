@@ -3,12 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Main page</title>
+        <title>Register</title>
         <link rel="stylesheet" href="bootstrap.css" />
         <style>
             body {
                 padding: 20px;
+                text-align: center;
             }
+            h1{
+                margin: 40px;
+            }
+
         </style>
     </head>
     <body>
@@ -26,23 +31,15 @@
 
         <div class="container">
             <h1>Register</h1>
-                E-mail: <input type="email" id="email" /><br />
-                Password: <input type="password" id="password" /><br />
-                Password again: <input type="password" id="password2" /><br />
-                <input id="submitButton" type="submit" value="Register" />
+            E-mail: <input type="email" id="email" /><br />
+            Password: <input type="password" id="password" /><br />
+            Password again: <input type="password" id="password2" /><br />
+            <input id="registerButton" type="submit" value="Register" />
         </div>
 
         <script>
-            const emails = [];
-            const passwords = [];
-            console.log(!(localStorage.getItem("emails") === null) && !(localStorage.getItem("passwords") === null))
-            if(!(localStorage.getItem("emails") === null) && !(localStorage.getItem("passwords") === null)){
-                const emails = JSON.parse(localStorage.getItem("emails"));
-                const passwords = JSON.parse(localStorage.getItem("passwords"));
-                console.log(passwords);
-                console.log(emails);
-            }
-                
+            const emails = JSON.parse(localStorage.getItem('emails'));
+            const passwords = JSON.parse(localStorage.getItem('passwords'));
 
             function validateForm() {
                 let email = document.getElementById('email').value;
@@ -60,14 +57,14 @@
                 }
             }
 
-            document.getElementById('submitButton').addEventListener('click', () => {
+            document.getElementById('registerButton').addEventListener('click', () => {
                 if (validateForm()) {
-                    emails.push(document.getElementById("email").value)
-                    passwords.push(document.getElementById("password").value)
-                    
+                    emails.push(document.getElementById('email').value);
+                    passwords.push(document.getElementById('password').value);
+
                     localStorage.setItem('emails', JSON.stringify(emails));
                     localStorage.setItem('passwords', JSON.stringify(passwords));
-                    
+
                     alert('Registration successful!');
                 }
             });
