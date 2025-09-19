@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hőmérséklet átváltó</title>
+    <style>
+        #main {
+            text-align: center;
+        }
+        #farrenheit, #kelvin, label {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+    <h1>Hőmérséklet átváltó</h1>
+
+    <label for="celsius">Adja meg a Celsius hőmérsékletet:</label><br>
+    <input type="number" id="celsius">
+
+    <button onclick="szamitas()">Számítás</button>
+
+    <div id="farrenheit"></div>
+    <div id="kelvin"></div>
+
+    <script src="homerseklet.js"></script>
+    </div>
+</body>
+</html>

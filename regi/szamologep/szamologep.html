@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Számológép</title>
+
+        <style>
+            body {
+                background-color: lightblue;
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Egyszerű Számológép</h1>
+        <input type="number" id="elso" />
+        <select name="muvelet" id="muvelet">
+            <option value="osszeadas">+</option>
+            <option value="kivonas">-</option>
+            <option value="szorzas">*</option>
+            <option value="osztas">/</option>
+        </select>
+        <input type="number" id="masodik" />
+
+        <button id="szamitas">Számítás</button>
+
+        <div id="eredmeny"></div>
+
+        <script>
+            let e = document.getElementById('eredmeny');
+            if (
+                localStorage.getItem('elso') &&
+                localStorage.getItem('masodik') &&
+                localStorage.getItem('muvelet') &&
+                localStorage.getItem('eredmeny')
+            ) {
+                document.getElementById('elso').value = localStorage.getItem('elso');
+                document.getElementById('masodik').value = localStorage.getItem('masodik');
+                document.getElementById('muvelet').value = localStorage.getItem('muvelet');
+                e.innerHTML = localStorage.getItem('eredmeny');
+            }
+
+            document.getElementById('szamitas').addEventListener('click', () => {
+                let elso = parseInt(document.getElementById('elso').value);
+                let masodik = parseInt(document.getElementById('masodik').value);
+                let muvelet = document.getElementById('muvelet').value;
+
+                let eredmeny;
+
+                localStorage.setItem('elso', elso);
+                localStorage.setItem('masodik', masodik);
+                localStorage.setItem('muvelet', muvelet);
+
+                switch (muvelet) {
+                    case 'osszeadas':
+                        eredmeny = elso + masodik;
+                        e.innerHTML = 'Eredmeny: ' + eredmeny;
+                        break;
+                    case 'kivonas':
+                        eredmeny = elso - masodik;
+                        e.innerHTML = 'Eredmeny: ' + eredmeny;
+                        break;
+                    case 'szorzas':
+                        eredmeny = elso * masodik;
+                        e.innerHTML = 'Eredmeny: ' + eredmeny;
+                        break;
+                    case 'osztas':
+                        eredmeny = elso / masodik;
+                        e.innerHTML = 'Eredmeny: ' + eredmeny;
+                        break;
+                    default:
+                        e.innerHTML = 'Hiba';
+                        break;
+                }
+
+                localStorage.setItem('eredmeny', `Eredmeny: ${eredmeny}`);
+            });
+        </script>
+    </body>
+</html>

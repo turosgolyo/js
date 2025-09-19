@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pénzváltó</title>
+        <style>
+            #main {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h1>Pénzváltó</h1>
+            <label for="osszeg"></label>
+            <input type="number" min="1" id="osszeg" />
+            <select name="penznem" id="penznem">
+                <option value="euro">Euró</option>
+                <option value="dollar">Dollár</option>
+            </select>
+            <button id="atvalt">Átváltás</button>
+            <div id="atvaltott"></div>
+        </div>
+
+        <script>
+            if (localStorage.getItem('szam')) {
+                document.getElementById('osszeg').value = localStorage.getItem('szam');
+            }
+
+            document.getElementById('atvalt').addEventListener('click', () => {
+                let osszeg = document.getElementById('osszeg').value;
+                let penznem = document.getElementById('penznem').value;
+                let atvaltott;
+
+                localStorage.setItem('szam', osszeg);
+
+                alert('Átvált');
+
+                switch (penznem) {
+                    case 'euro':
+                        atvaltott = osszeg / 380;
+                        document.getElementById('atvaltott').innerHTML =
+                            osszeg + ' Ft - ' + atvaltott.toFixed(2) + ' €';
+                        break;
+                    case 'dollar':
+                        atvaltott = osszeg / 350;
+                        document.getElementById('atvaltott').innerHTML =
+                            osszeg + ' Ft - ' + atvaltott.toFixed(2) + ' $';
+                        break;
+                    default:
+                        break;
+                }
+            });
+        </script>
+    </body>
+</html>

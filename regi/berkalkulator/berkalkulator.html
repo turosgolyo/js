@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bérkalkulátor</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: lightcyan;
+        }
+        input {
+            margin: 5px;
+        }
+        div, button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>Bérkalkulátor</h1>
+        <div>
+            <label for="brutto">Órabér (brutto): </label>
+            <input type="number" id="brutto" name="tebruttostsuly"> Ft
+        </div>
+        <div>
+            <label for="ido">Ledolgozott órák száma: </label>
+            <input type="number" id="ido" name="ido">
+        </div>
+
+        <button id="szamolas">Számítás!</button>
+
+        <div id="eredmenyBrutto"></div>
+        <div id="eredmenyNetto"></div>
+    </div>
+
+    <script>
+        if(
+            localStorage.getItem("brutto") && 
+            localStorage.getItem("ido") && 
+            localStorage.getItem("eredmenyBrutto") && 
+            localStorage.getItem("eredmenyNetto")) {
+                document.getElementById("brutto").value = localStorage.getItem("brutto");
+                document.getElementById("ido").value = localStorage.getItem("ido");
+                document.getElementById("eredmenyBrutto").innerHTML = localStorage.getItem("eredmenyBrutto");
+                document.getElementById("eredmenyNetto").innerHTML = localStorage.getItem("eredmenyNetto");
+        }
+
+        document.getElementById("szamolas").addEventListener("click", () => {
+            let br = Number(document.getElementById("brutto").value);
+            let ido = Number(document.getElementById("ido").value);
+
+            localStorage.setItem("brutto", br);
+            localStorage.setItem("ido", ido);
+
+            let eredmenyBrutto = ido * br;
+            let jarulek = (eredmenyBrutto * 0.1) + (eredmenyBrutto * 0.07) + (eredmenyBrutto * 0.015);
+            let szja = (eredmenyBrutto - jarulek) * 0.15;
+            let eredmenyNetto = eredmenyBrutto - jarulek - szja
+
+            localStorage.setItem("eredmenyBrutto", `Bruttó bér: ${eredmenyBrutto} Ft`);
+            localStorage.setItem("eredmenyNetto", `Nettó bér: ${eredmenyNetto} Ft`);
+
+            document.getElementById("eredmenyBrutto").innerHTML = "Bruttó bér: " + eredmenyBrutto + " Ft";
+            document.getElementById("eredmenyNetto").innerHTML = "Nettó bér: " + eredmenyNetto + " Ft";
+        })
+    </script>
+</body>
+</html>
