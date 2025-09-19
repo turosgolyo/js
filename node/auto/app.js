@@ -42,11 +42,26 @@ app.post('/cars', (req, res) => {
 app.put('/cars/:id', (req, res) => {
     const id = +req.params.id;
     let car = cars.find((x) => x.id == id);
+    if (!car) {
+        return res.status(404).json({ message: 'Car not found!' });
+    }
     const { brand, model } = req.body;
     if (!brand || !model) {
-        res.status(400).json({ message: 'Invalid credentials!' });
+        return res.status(400).json({ message: 'Invalid credentials!' });
     }
-    car = { id, brand, model };
-    cars[id] = car;
+    const index = cars.indexOf(car);
+    car = { id: car.id, brand: brand, model: model };
+    cars[index] = car;
     res.status(200).json(car);
+});
+
+app.delete('/cars/:id', (req, res) => {
+    const id = +req.params.id;
+    let car = cars.find((x) => x.id === id);
+    if (!car) {
+        return res.status(404).json({ message: 'Car not found!' });
+    }
+    let index = cars.indexOf(car);
+    cars.splice(index, 1);
+    res.status(200).json({ message: 'Delete successful!' });
 });
