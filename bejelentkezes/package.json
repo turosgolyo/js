@@ -1,0 +1,25 @@
+{
+    "name": "bejelentkezes",
+    "version": "1.0.0",
+    "main": "script.js",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon app.js",
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "better-sqlite3": "^12.4.1",
+        "bootstrap": "^5.3.8",
+        "cors": "^2.8.5",
+        "express": "^5.1.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.10"
+    }
+}
