@@ -35,7 +35,26 @@ app.post('/users', async (req, res) => {
     res.status(201).json(user);
 });
 
-app.post('/login', (req, res) => {});
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    const user = db.getUserByEmail(email);
+    if (!user) {
+        return res.status(404).json({ message: 'Invalid credentials' });
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+        return res.status(403).json({ message: 'Invalid credentials' });
+    }
+    res.json(user);
+});
+
+app.use((err, req, res, next) => {
+    if (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server runs on port ${PORT}`);
