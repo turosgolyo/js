@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getPosts, getPostById, getPostByUserId, savePost, deletePost } from '../data/post.js';
+import { getPosts, getPostById, getPostByUserId, savePost, deletePost } from '../util/post.js';
 
 const router = Router();
 
