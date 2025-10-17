@@ -1,4 +1,4 @@
-import db from './database.js';
+import db from '../data/database.js';
 
 db.prepare(
     `CREATE TABLE IF NOT EXISTS posts (

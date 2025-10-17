@@ -1,59 +1,66 @@
-import { Router } from 'express';
-import { getPosts, getPostById, getPostByUserId, savePost, deletePost } from '../util/post.js';
+import express from 'express';
+import * as Posts from '../data/post.js';
+import * as Users from '../data/user.js';
+import { auth } from './usersRoutes.js';
 
-const router = Router();
+const router = express.Router();
 
 router.get('/', (req, res) => {
-    const posts = getPosts();
-    res.status(200).json(posts);
+    const posts = Posts.getPosts();
+    res.json(posts);
+});
+
+router.post('/', auth, (req, res) => {
+    const { title, content } = req.body;
+    if (!title || !content) {
+        return res.status(400).json({ message: 'Missing required data' });
+    }
+    const saved = Posts.savePost(req.userId, title, content);
+    const post = Posts.getPostById(saved.lastInsertRowid);
+    res.json(post);
 });
 
 router.get('/:id', (req, res) => {
-    const post = getPostById(req.params.id);
+    const post = Posts.getPostById(+req.params.id);
     if (!post) {
         return res.status(404).json({ message: 'Post not found' });
     }
-    res.status(200).json(post);
+    const user = Users.getUserById(post.userId);
+    const data = {
+        postId: post.id,
+        title: post.title,
+        content: post.content,
+        author: user.name,
+        contact: user.email,
+    };
+    res.json(data);
 });
 
-router.get('/user/:userId', (req, res) => {
-    const posts = getPostByUserId(req.params.userId);
-    res.status(200).json(posts);
-});
-
-router.post('/', (req, res) => {
-    const { userId, title, content } = req.body;
-    if (!userId || !title || !content) {
-        return res.status(400).json({ message: 'Missing required fields' });
-    }
-    const savedPost = savePost(userId, title, content);
-    const post = getPostById(savedPost.lastInsertRowid);
-    res.status(201).json(post);
-});
-
-router.put('/:id', (req, res) => {
+router.patch('/:id', (req, res) => {
     const id = +req.params.id;
-    const post = getPostById(id);
+    let post = Posts.getPostById(id);
     if (!post) {
-        return res.status(400).json({ message: 'Post not found' });
+        return res.status(404).json({ message: 'Post not found' });
     }
-    const { userId, title, content } = req.body;
-    if (!userId || !title || !content) {
-        return res.status(400).json({ message: 'Missing required fields' });
-    }
-    post.updatePost(id, userId, title, content);
-    const updatedPost = getPostById(id);
-    res.status(200).json(updatedPost);
+    const { title, content } = req.body;
+    Posts.updatePost(id, title || post.title, content || post.content);
+    post = Posts.getPostById(id);
+    const now = new Date(Date.now());
+    const data = {
+        ...post,
+        updated: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
+    };
+    res.json(data);
 });
 
-router.delete('/posts/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const id = +req.params.id;
-    const post = getPostById(id);
+    const post = Posts.getPostById(id);
     if (!post) {
-        return res.status(400).json({ message: 'Post not found' });
+        return res.status(404).json({ message: 'Post not found' });
     }
-    deletePost(id);
-    res.status(204).json({ message: 'Post deleted' });
+    Posts.deletePost(id);
+    res.sendStatus(204);
 });
 
 export default router;

@@ -1,4 +1,4 @@
-import db from './database.js';
+import db from '../data/database.js';
 
 db.prepare(
     `CREATE TABLE IF NOT EXISTS users (
@@ -25,4 +25,4 @@ export const updateUser = (id, name, email, password) =>
         .prepare('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?')
         .run(name, email, password, id);
 
-export const deleteUser = (id) => db.prepare('DELETE FROM users WHERE id = ?').run(id);
+// export const deleteUser = (id) => db.prepare('DELETE FROM users WHERE id = ?').run(id);
