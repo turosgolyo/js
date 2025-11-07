@@ -1,0 +1,17 @@
+4. Eseménykezelő (Event Manager)Egy színház, rendezvényszervező vagy rendezvényház számára nyújtott szolgáltatás.
+
+Végpontok:
+GET /api/events
+POST /api/events
+POST /api/events/:id/register
+GET /api/myevents
+
+Táblák:
+users(id, email, password_hash)
+events(id, name, date, location, description)
+registrations(event_id, user_id)
+
+Frontend:
+Nyilvános eseménylista
+Saját események
+Login / Register oldal
