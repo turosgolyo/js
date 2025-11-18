@@ -4,33 +4,48 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Main Page</title>
-        <link rel="stylesheet" href="../styles/bootstrap.css" />
-        <style>
-            h1 {
-                margin: 50px;
-                text-align: center;
-            }
-        </style>
+        <link rel="stylesheet" href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../styles/index.css" />
     </head>
     <body>
-        <nav class="navbar" style="background-color: #e3f2fd" data-bs-theme="light">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Event Manager</a>
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Register</a>
-                    </li>
-                </ul>
+                <a class="navbar-brand" href="main.html">Event Manager</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarText"
+                    aria-controls="navbarText"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse nav-underline" id="navbarText">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="main.html">Home</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register.html">Register</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
-        <div class="container">
-            <h1>Event Manager</h1>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <h1>Event Manager</h1>
+                </div>
+            </div>
         </div>
+        <script src="../bootstrap-5.3.8-dist/js/bootstrap.min.js"></script>
     </body>
 </html>
