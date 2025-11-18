@@ -1,7 +1,4 @@
-// const emails = JSON.parse(localStorage.getItem('emails'));
-// const passwords = JSON.parse(localStorage.getItem('passwords'));
-
-function validateForm() {
+const validateForm = () => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
     let password2 = document.getElementById('password2').value;
@@ -15,28 +12,14 @@ function validateForm() {
     } else {
         return true;
     }
-}
+};
 
 document.getElementById('registerButton').addEventListener('click', () => {
     if (validateForm()) {
-        // emails.push(document.getElementById('email').value);
-        // passwords.push(document.getElementById('password').value);
-
-        // localStorage.setItem('emails', JSON.stringify(emails));
-        // localStorage.setItem('passwords', JSON.stringify(passwords));
-
-        // alert('Registration successful!');
-
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        const password2 = document.getElementById('password2').value;
 
-        if (password !== password2) {
-            alert('Passwords do not match!');
-            return;
-        }
-
-        fetch('/register', {
+        fetch('/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,17 +29,18 @@ document.getElementById('registerButton').addEventListener('click', () => {
                 password: password,
             }),
         })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
+            .then((response) => response.json().then((data) => ({ status: response.status, data })))
+            .then(({ status }) => {
+                if (status === 201) {
                     alert('Registration successful!');
-                    window.location.href = 'login.html';
+                    window.location.href = '/pages/login.html';
                 } else {
-                    alert('Registration failed');
+                    alert('Registration failed!');
                 }
             })
             .catch((error) => {
                 console.error(error);
+                alert('Registration failed: ' + (error.message || 'Network error'));
             });
     }
 });

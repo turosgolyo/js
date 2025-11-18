@@ -6,9 +6,10 @@
         <title>Main Page</title>
         <link rel="stylesheet" href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../styles/index.css" />
+        <link rel="stylesheet" href="../styles/main.css" />
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="main.html">Event Manager</a>
                 <button
@@ -39,10 +40,18 @@
                 </div>
             </div>
         </nav>
-        <div class="container text-center">
-            <div class="row">
-                <div class="col">
-                    <h1>Event Manager</h1>
+        <div class="container-fluid text-center" id="main">
+            <div
+                class="row justify-content-center bg-black bg-gradient bg-opacity-50 align-items-center vh-100"
+            >
+                <div class="col text-white">
+                    <h1>Event Manager application</h1>
+                    <h2>Create and register to events!</h2>
+                    <p>
+                        Please <a class="link-light" href="register.html">register</a> or if you
+                        already have an account then
+                        <a class="link-light" href="login.html">log in</a>!
+                    </p>
                 </div>
             </div>
         </div>

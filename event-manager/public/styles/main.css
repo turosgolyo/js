@@ -1,0 +1,6 @@
+#main {
+    background-image: url("../images/arena.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
