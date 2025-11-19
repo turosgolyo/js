@@ -11,9 +11,12 @@ db.prepare(
 
 export const getRegistrations = () => db.prepare('SELECT * FROM registrations').all();
 
-export const saveRegistraion = (user_id, event_id) =>
+export const getRegistrationsByUserId = (user_id) =>
+    db.prepare('SELECT * FROM registrations WHERE user_id = ?').all(user_id);
+
+export const saveRegistration = (user_id, event_id) =>
     db
-        .prepare('INSERT INTO registrations (user_id = ?, event_id = ?) VALUES (?, ?)')
+        .prepare('INSERT INTO registrations (user_id, event_id) VALUES (?, ?)')
         .run(user_id, event_id);
 
 export const deleteRegistration = (user_id, event_id) =>

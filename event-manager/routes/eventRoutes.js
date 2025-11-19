@@ -1,12 +1,12 @@
 import express from 'express';
-import * as events from '../data/event.js';
+import * as eventData from '../data/event.js';
 
 const router = express.Router();
 
 router.get('/events', (req, res) => {
     try {
-        const events = events.getEvents();
-        res.status(200).json(events);
+        const eventsList = eventData.getEvents();
+        res.status(200).json(eventsList);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -15,11 +15,11 @@ router.get('/events', (req, res) => {
 router.get('/events/:id', (req, res) => {
     const id = +req.params.id;
     try {
-        const event = events.getEventById(id);
+        const event = eventData.getEventById(id);
         if (!event) {
-            res.status(404).json({ message: 'Event not found!' });
+            return res.status(404).json({ message: 'Event not found!' });
         }
-        res.status(200).json(events);
+        return res.status(200).json(event);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -31,10 +31,12 @@ router.post('/events', (req, res) => {
         return res.status(400).json({ message: 'Missing fields!' });
     }
     try {
-        const saved = events.saveEvent(name, date, location, description);
-        const event = events.getEventById(saved.lastInsertRowid);
+        const saved = eventData.saveEvent(name, date, location, description);
+        const event = eventData.getEventById(saved.lastInsertRowid);
         res.status(201).json(event);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 });
+
+export default router;

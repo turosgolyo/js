@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import * as users from '../data/user.js';
 import jwt from 'jsonwebtoken';
+import { authenticateUser } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -57,17 +58,9 @@ router.post('/logout', (req, res) => {
         .json({ message: 'Logged out successfully' });
 });
 
-router.get('/user', (req, res) => {
+router.get('/user', authenticateUser, (req, res) => {
     try {
-        const accessToken = req.cookies['jwt'];
-        if (!accessToken) {
-            return res.status(403).json({ message: 'Unauthorized' });
-        }
-        const token = jwt.verify(accessToken, 'secret-key');
-        if (!token && !token.id && !token.maxAge) {
-            return res.status(403).json({ message: 'Unauthorized' });
-        }
-        const user = users.getUserById(token.id);
+        const user = users.getUserById(req.user.id);
         const { id, email } = user;
         res.status(200).json({ id, email });
     } catch (error) {
