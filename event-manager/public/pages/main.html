@@ -29,23 +29,36 @@
                             <a class="nav-link active" aria-current="page" href="main.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="events.html">Events</a>
+                            <a
+                                class="nav-link"
+                                id="events-link"
+                                aria-current="page"
+                                href="events.html"
+                                >Events</a
+                            >
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="registrations.html"
+                            <a
+                                class="nav-link"
+                                id="registrations-link"
+                                aria-current="page"
+                                href="registrations.html"
                                 >Registrations</a
                             >
                         </li>
                     </ul>
                     <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
-                        <li class="nav-item">
+                        <li class="nav-item" id="profile-link" style="display: none">
                             <a class="nav-link" href="profile.html">My Profile</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.html">Login</a>
+                        <li class="nav-item" id="logout-link" style="display: none">
+                            <a class="nav-link" href="#">Logout</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="register.html">Register</a>
+                            <a class="nav-link" id="login-link" href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="register-link" href="register.html">Register</a>
                         </li>
                     </ul>
                 </div>
@@ -54,11 +67,12 @@
         <div class="container-fluid text-center" id="main">
             <div
                 class="row justify-content-center bg-light bg-opacity-75 bg-gradient align-items-center vh-100"
+                id="main-content"
             >
                 <div class="main-title col-lg-4 col-md-8 col-sm-10 p-5">
                     <h1>Event Manager application</h1>
                     <h3>Create and register to events!</h3>
-                    <p>
+                    <p class="disableAfterLogin">
                         Please <a class="link-info" href="register.html">register</a> or if you
                         already have an account then
                         <a class="link-info" href="login.html">log in</a>!
@@ -66,6 +80,9 @@
                 </div>
             </div>
         </div>
+
+        <script type="module" src="../scripts/auth.js"></script>
+        <script type="module" src="../scripts/main.js"></script>
         <script src="../bootstrap-5.3.8-dist/js/bootstrap.min.js"></script>
     </body>
 </html>
