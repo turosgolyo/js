@@ -1,29 +1,3 @@
-try {
-    fetch('/api/user', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then((response) => response.json().then((data) => ({ status: response.status, data })))
-        .then(({ status }) => {
-            if (status === 200) {
-                document.getElementById('login').style.display = 'none';
-                document.getElementById('isLoggedIn').style.display = 'block';
-                document.getElementById(
-                    'isLoggedIn',
-                ).innerHTML = `<h1>You're logged in!</h1><br><button id="exit">Exit</button>`;
-                document.getElementById('exit').addEventListener('click', () => {
-                    document.getElementById('isLoggedIn').style.display = 'none';
-                    document.getElementById('login').style.display = 'block';
-                });
-            }
-        });
-} catch (error) {
-    console.error('Error fetching user data:', error);
-}
-
 const validateForm = () => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
@@ -51,13 +25,14 @@ document.getElementById('loginButton').addEventListener('click', () => {
             .then(({ status }) => {
                 if (status === 200) {
                     alert('Successful login!');
+                    window.location.href = '/pages/main.html';
                 } else {
                     alert('Wrong email or password!');
                 }
             })
             .catch((error) => {
                 console.error(error);
-                alert('Registration failed: ' + (error.message || 'Network error'));
+                alert('Login failed: ' + (error.message || 'Network error'));
             });
     }
 });
