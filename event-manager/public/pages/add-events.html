@@ -6,6 +6,7 @@
         <title>Events</title>
         <link rel="stylesheet" href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../styles/index.css" />
+        <link rel="stylesheet" href="../styles/events.css" />
     </head>
     <body>
         <nav class="navbar navbar-expand-lg fixed-top">
@@ -64,6 +65,63 @@
             </div>
         </nav>
 
+        <div class="container-fluid cards-container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h1>Add events</h1>
+                    <a
+                        href="events.html"
+                        class="btn btn-lg btn-outline-secondary"
+                        id="add-event-button"
+                        >Go back to events</a
+                    >
+                </div>
+                <div class="col-lg-6 col-sm-10">
+                    <div class="form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingEventName"
+                            placeholder="event name"
+                        />
+                        <label for="floatingEventName">Event name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="floatingDate"
+                            placeholder="Date"
+                        />
+                        <label for="floatingDate">Date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingLocation"
+                            placeholder="location"
+                        />
+                        <label for="floatingLocation">Location</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingDescription"
+                            placeholder="description"
+                        />
+                        <label for="floatingDescription">Description</label>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <a class="btn btn-lg btn-outline-secondary" id="save-event-button"
+                        >Save event</a
+                    >
+                </div>
+            </div>
+        </div>
+        <script src="../scripts/addEvents.js"></script>
         <script src="../scripts/auth.js"></script>
         <script src="../bootstrap-5.3.8-dist/js/bootstrap.min.js"></script>
     </body>
