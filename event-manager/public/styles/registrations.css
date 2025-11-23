@@ -1,0 +1,20 @@
+.cards-container {
+    margin-top: 100px;
+    padding: 25px;
+    transition: all 200ms ease-in-out;
+}
+
+.card {
+    min-height: 200px;
+    box-shadow: 0 10px 15px rgb(180, 240, 255);
+    border-radius: 10px;
+    transition: 200ms ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 10px 30px rgb(150, 255, 224);
+    transition: 200ms ease-in-out;
+}
+#add-event-button {
+    margin: 20px;
+}

@@ -13,9 +13,9 @@ router.get('/registrations', (req, res) => {
     }
 });
 
-router.get('/registrations/user', authenticateUser, (req, res) => {
+router.get('/registrations/user/:id', authenticateUser, (req, res) => {
     try {
-        const id = req.user.id;
+        const id = req.params.id;
         const userRegistrationsList = registrationData.getRegistrationsByUserId(id);
         res.status(200).json(userRegistrationsList);
     } catch (error) {
@@ -24,8 +24,7 @@ router.get('/registrations/user', authenticateUser, (req, res) => {
 });
 
 router.post('/registrations', authenticateUser, (req, res) => {
-    const eventId = req.body;
-    const userId = req.user.id;
+    const { eventId, userId } = req.body;
     if (!eventId) {
         return res.status(400).json({ message: 'Missing fields!' });
     }

@@ -6,6 +6,7 @@
         <title>Events</title>
         <link rel="stylesheet" href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../styles/index.css" />
+        <link rel="stylesheet" href="../styles/add-events.css" />
     </head>
     <body>
         <nav class="navbar navbar-expand-lg fixed-top">
@@ -64,6 +65,53 @@
             </div>
         </nav>
 
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center title-section">
+                    <h1>Add events</h1>
+                    <a
+                        href="events.html"
+                        class="btn btn-lg btn-outline-secondary"
+                        id="events-button"
+                        >Go back to events</a
+                    >
+                </div>
+            </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10 form-floating mb-3">
+                <input type="text" class="form-control" id="name" placeholder="name" />
+                <label for="name">Name</label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10 form-floating mb-3">
+                <input type="text" class="form-control" id="description" placeholder="description" />
+                <label for="description">Description</label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10 form-floating mb-3">
+                <input type="text" class="form-control" id="location" placeholder="location" />
+                <label for="location">Location</label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10 form-floating mb-3">
+                <input type="date" class="form-control" id="date" placeholder="2000.01.01" />
+                <label for="date">Date</label>
+            </div>
+        </div>
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-6 col-md-8 col-sm-10 form-floating mb-3">
+                <a
+                        href="#"
+                        class="btn btn-lg btn-outline-secondary"
+                        id="save-button"
+                        >Save event</a
+                    >
+            </div>
+        </div>
+        <script src="../scripts/add-event.js"></script>
         <script src="../scripts/auth.js"></script>
         <script src="../bootstrap-5.3.8-dist/js/bootstrap.min.js"></script>
     </body>
