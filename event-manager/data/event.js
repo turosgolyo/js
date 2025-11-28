@@ -12,7 +12,7 @@ db.prepare(
 
 export const getEvents = () => db.prepare('SELECT * FROM events').all();
 
-export const getEventById = (id) => db.prepare('SELECT * FROM events WHERE id = ?').run(id);
+export const getEventById = (id) => db.prepare('SELECT * FROM events WHERE id = ?').get(id);
 
 export const saveEvent = (name, date, location, description) =>
     db

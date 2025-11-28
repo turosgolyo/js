@@ -19,7 +19,6 @@ logoutLink.addEventListener('click', () => {
         .then(({ status }) => {
             if (status === 200) {
                 isLoggedIn = false;
-
                 alert('Successfully logged out!');
                 updateNavLinks();
                 updateElements();
@@ -39,9 +38,11 @@ try {
         },
     })
         .then((response) => response.json().then((data) => ({ status: response.status, data })))
-        .then(({ status }) => {
+        .then(({ status, data }) => {
             if (status === 200) {
                 isLoggedIn = true;
+                localStorage.setItem('userId', data.id);
+                localStorage.setItem('userEmail', data.email);
             } else {
                 isLoggedIn = false;
             }
