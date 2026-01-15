@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+    <link
+      rel="stylesheet"
+      href="./bootstrap-5.3.8-dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./counter.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Counter</a>
+      </div>
+    </nav>
+    <div class="container text-center">
+      <div class="row align-items-center">
+        <div class="col">
+          Counter value:
+          <div id="count"></div>
+        </div>
+      </div>
+      <div class="row align-items-center justify-content-center">
+        <div class="col-1">
+          <button type="button" class="btn" id="negative">-</button>
+        </div>
+        <div class="col-1">
+          <button type="button" class="btn" id="positive">+</button>
+        </div>
+      </div>
+      <div class="row align-items-center justify-content-center">
+        <div class="col-2">
+        -10
+        </div>
+        <div class="col-2">
+        +10
+        </div>
+      </div>
+    </div>
+    <script src="counter.js"></script>
+  </body>
+</html>
