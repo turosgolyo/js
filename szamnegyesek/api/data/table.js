@@ -7,7 +7,7 @@ db.prepare(
     )`,
 ).run();
 
-export const getAllTables = () => db.prepare('SELECT * FROM tables');
+export const getAllTables = () => db.prepare('SELECT * FROM tables').all();
 
 export const getTableById = (id) => db.prepare('SELECT * FROM tables WHERE id = ?').get(id);
 
